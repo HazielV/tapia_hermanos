@@ -1,0 +1,134 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model cotizacion {
+  id             Int       @id @default(autoincrement())
+  nombre         String
+  correo         String
+  telefono       Int
+  telefono_movil Int?
+  estacion_id    Int
+  estacion_id_2  Int
+  cuidad_origen  estacion? @relation("origen", fields: [estacion_id], references: [id])
+  cuidad_destino estacion? @relation("destino", fields: [estacion_id_2], references: [id])
+  tipo           String?
+  valor          Int?
+  volumen        String?
+  altura         String?
+  longitud       String?
+  ancho          String?
+  peso           String?
+  formaPago      String?
+  comentario     String?
+}
+
+model persona {
+  id              Int     @id @default(autoincrement())
+  nombre          String
+  primerApellido  String
+  segundoApellido String
+  nroDocumento    Int     @unique
+  email           String?
+  user            user?
+}
+
+model user {
+  id         Int     @id @default(autoincrement())
+  login      String
+  password   String
+  persona_id Int     @unique
+  persona    persona @relation(fields: [persona_id], references: [id])
+  roles      rol[]   @relation("user_roles")
+  estado     Int     @default(0)
+}
+
+model rol {
+  id          Int    @id @default(autoincrement())
+  descripcion String
+  user_id     Int
+  users       user[] @relation("user_roles")
+}
+
+model estado {
+  id          Int    @id @default(autoincrement())
+  descripcion String
+}
+
+model estacion {
+  id             Int          @id @default(autoincrement())
+  nombre         String
+  ubicacion      String?
+  tipoEstacionId Int
+  tipo           tipoEstacion @relation(fields: [tipoEstacionId], references: [id])
+  parada         parada[]
+  estado         Int          @default(1)
+  cotizacion1    cotizacion[] @relation("origen")
+  cotizacion2    cotizacion[] @relation("destino")
+}
+
+model tipoEstacion {
+  id          Int    @id @default(autoincrement())
+  descripcion String
+
+  estacion estacion[]
+}
+
+model parada {
+  id          Int      @id @default(autoincrement())
+  orden       Int
+  estacion_id Int
+  estacion    estacion @relation(fields: [estacion_id], references: [id])
+  ruta        ruta?    @relation(fields: [rutaId], references: [id])
+  rutaId      Int?
+}
+
+model ruta {
+  id     Int      @id @default(autoincrement())
+  nombre String
+  parada parada[]
+  pedido pedido[]
+}
+
+model pedido {
+  id             Int      @id @default(autoincrement())
+  estado         Int      @default(1)
+  fecha_partida  DateTime
+  fecha_pedido   DateTime
+  fecha_entrega  DateTime
+  nombre_cliente String
+  correo         String
+  telefono       Int?
+
+  precio    Int?
+  tipo      String?
+  volumen   String?
+  altura    String?
+  longitud  String?
+  ancho     String?
+  peso      String?
+  formaPago String?
+  codigo    String  @unique
+  placas    placa[]
+  ruta_id   Int
+  ruta      ruta    @relation(fields: [ruta_id], references: [id])
+}
+
+model placa {
+  id       Int    @id @default(autoincrement())
+  nroPlaca String @unique
+
+  pedido   pedido? @relation(fields: [pedidoId], references: [id])
+  pedidoId Int?
+}
