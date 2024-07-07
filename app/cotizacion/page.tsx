@@ -1,20 +1,21 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import React from "react";
-import { getAllEstacionesActivas } from "../actions/estaciones";
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
+import React from 'react'
+import { getAllEstacionesActivas } from '../actions/estaciones'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { create } from "../actions/cotizacion";
+} from '@/components/ui/select'
+import { create } from '../actions/cotizacion'
+import Link from 'next/link'
 
 export default async function Cotizacion() {
-  const estaciones = await getAllEstacionesActivas();
+  const estaciones = await getAllEstacionesActivas()
   return (
     <div className="h-screen flex flex-col w-screen pt-20 ">
       <div className="fixed w-full z-50 bg-gray-100 p-4 flex items-center justify-between py-2 top-0">
@@ -41,24 +42,9 @@ export default async function Cotizacion() {
         </div>
         {/* MENUS */}
         <div className="hidden sm:block">
-          <div className="grid grid-cols-6 gap-8 font-medium">
+          <div className="grid gap-8 font-medium">
             <div className="cursor-pointer ">
-              <a href="#Inicio">Inicio</a>
-            </div>
-            <div className="cursor-pointer">
-              <a href="#Nosotros">Nosotros</a>
-            </div>
-            <div className="cursor-pointer">
-              <a href="#Servicios">Servicios</a>
-            </div>
-            <div className="cursor-pointer">
-              <a href="#Cotizacion">Cotizacion</a>
-            </div>
-            <div className="cursor-pointer">
-              <a href="#Destinos">Destinos</a>
-            </div>
-            <div className="cursor-pointer">
-              <a href="#Contacto">Contacto</a>
+              <Link href={'/'}>Inicio</Link>
             </div>
           </div>
         </div>
@@ -72,7 +58,7 @@ export default async function Cotizacion() {
             <h1 className="text-4xl font-medium ">Cotizacion en linea</h1>
             <div className="flex justify-end">
               <Button
-                variant={"default"}
+                variant={'default'}
                 className="bg-indigo-600 hover:bg-indigo-700"
               >
                 Enviar cotizacion
@@ -242,5 +228,5 @@ export default async function Cotizacion() {
         </div>
       </form>
     </div>
-  );
+  )
 }
