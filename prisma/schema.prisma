@@ -46,7 +46,7 @@ model persona {
 
 model user {
   id         Int     @id @default(autoincrement())
-  login      String
+  login      String  @unique
   password   String
   persona_id Int     @unique
   persona    persona @relation(fields: [persona_id], references: [id])
@@ -86,12 +86,13 @@ model tipoEstacion {
 }
 
 model parada {
-  id          Int      @id @default(autoincrement())
+  id          Int           @id @default(autoincrement())
   orden       Int
   estacion_id Int
-  estacion    estacion @relation(fields: [estacion_id], references: [id])
-  ruta        ruta?    @relation(fields: [rutaId], references: [id])
+  estacion    estacion      @relation(fields: [estacion_id], references: [id])
+  ruta        ruta?         @relation(fields: [rutaId], references: [id])
   rutaId      Int?
+  seguimiento seguimiento[]
 }
 
 model ruta {
@@ -111,18 +112,28 @@ model pedido {
   correo         String
   telefono       Int?
 
-  precio    Int?
-  tipo      String?
-  volumen   String?
-  altura    String?
-  longitud  String?
-  ancho     String?
-  peso      String?
-  formaPago String?
-  codigo    String  @unique
-  placas    placa[]
-  ruta_id   Int
-  ruta      ruta    @relation(fields: [ruta_id], references: [id])
+  precio      Int?
+  tipo        String?
+  volumen     String?
+  altura      String?
+  longitud    String?
+  ancho       String?
+  peso        String?
+  formaPago   String?
+  codigo      String        @unique
+  placas      placa[]
+  ruta_id     Int
+  ruta        ruta          @relation(fields: [ruta_id], references: [id])
+  seguimiento seguimiento[]
+}
+
+model seguimiento {
+  id        Int      @id @default(autoincrement())
+  pedido_id Int
+  pedido    pedido   @relation(fields: [pedido_id], references: [id])
+  parada_id Int
+  parada    parada   @relation(fields: [parada_id], references: [id])
+  fecha     DateTime
 }
 
 model placa {
