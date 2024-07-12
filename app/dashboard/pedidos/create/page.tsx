@@ -1,24 +1,24 @@
-import Lucide_Icon from "@/components/lucide_icono";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import Link from "next/link";
-import React from "react";
+import Lucide_Icon from '@/components/lucide_icono'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import Link from 'next/link'
+import React from 'react'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { tipoEstaciones } from "@/app/actions/estaciones";
-import { getAllActivas } from "@/app/actions/rutas";
-import Placas from "./placas";
-import { create } from "@/app/actions/pedidos";
+} from '@/components/ui/select'
+import { tipoEstaciones } from '@/app/actions/estaciones'
+import { getAllActivas } from '@/app/actions/rutas'
+import Placas from './placas'
+import { create } from '@/app/actions/pedidos'
 
 export default async function Create() {
-  const datos = await tipoEstaciones();
-  const rutasActivas = await getAllActivas();
+  const datos = await tipoEstaciones()
+  const rutasActivas = await getAllActivas()
   return (
     <form
       action={create}
@@ -27,10 +27,10 @@ export default async function Create() {
       <div className="flex-1 p-8 pt-10 flex flex-col gap-5">
         <div className="mb-5 flex justify-between">
           <h1 className="text-4xl font-medium ">Nuevo Pedido</h1>
-          <Link href={"/dashboard/estaciones"}>
+          <Link href={'/dashboard/pedidos'} replace>
             <Button
               type="button"
-              variant={"outline"}
+              variant={'outline'}
               className=" text-sm pl-3 "
             >
               <Lucide_Icon name="ArrowLeft" size={22} />
@@ -182,12 +182,12 @@ export default async function Create() {
       </div>
       <div className="flex sticky bottom-0 bg-white justify-end w-full md:col-span-2  text-sm px-4 py-4 border-t">
         <Button
-          variant={"default"}
+          variant={'default'}
           className="bg-indigo-600 hover:bg-indigo-700"
         >
           Crear Pedido
         </Button>
       </div>
     </form>
-  );
+  )
 }
