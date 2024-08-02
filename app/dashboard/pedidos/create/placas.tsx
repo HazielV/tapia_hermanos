@@ -2,10 +2,18 @@
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { placa } from "@prisma/client";
 import { useState } from "react";
 
-export default function Placas() {
-  const [numero, setNumero] = useState(0);
+interface props {
+  defaultValue?: number | undefined;
+  defaultData?: placa[] | null | undefined;
+}
+export default function Placas({
+  defaultValue = 0,
+  defaultData = null,
+}: props) {
+  const [numero, setNumero] = useState(defaultValue);
   return (
     <>
       <div className="grid w-full items-center gap-1.5 ">
@@ -33,6 +41,9 @@ export default function Placas() {
               type="text"
               placeholder={`Numero de Placa ${indice + 1}`}
               required
+              defaultValue={
+                (defaultData && defaultData[indice]?.nroPlaca) || undefined
+              }
             />
           </div>
         ))

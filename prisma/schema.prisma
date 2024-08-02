@@ -114,11 +114,11 @@ model pedido {
 
   precio      Int?
   tipo        String?
-  volumen     String?
-  altura      String?
-  longitud    String?
-  ancho       String?
-  peso        String?
+  volumen     Int?
+  altura      Int?
+  longitud    Int?
+  ancho       Int?
+  peso        Int?
   formaPago   String?
   codigo      String        @unique
   placas      placa[]

@@ -1,8 +1,8 @@
-'use client'
+"use client";
 
-import Lucide_Icon from '@/components/lucide_icono'
-import useSidebarStore from '@/store/sidebar'
-import { Menu } from 'lucide-react'
+import Lucide_Icon from "@/components/lucide_icono";
+import useSidebarStore from "@/store/sidebar";
+import { Menu } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,12 +10,12 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
+} from "@/components/ui/dropdown-menu";
 
 export default function Header({ logout }: { logout: () => void }) {
-  const { toggle } = useSidebarStore()
+  const { toggle } = useSidebarStore();
   return (
-    <div className="w-full bg-white shadow-md px-5 py-3.5 flex justify-between">
+    <div className="w-full bg-white shadow-md px-5 py-3.5 flex justify-between z-50">
       <button onClick={toggle} className="outline-none">
         <Menu />
       </button>
@@ -48,5 +48,5 @@ export default function Header({ logout }: { logout: () => void }) {
         </DropdownMenuContent>
       </DropdownMenu>
     </div>
-  )
+  );
 }

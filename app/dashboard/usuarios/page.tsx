@@ -6,13 +6,14 @@ import Tabla from "@/components/tabla/Tabla";
 import TablaHeader from "@/components/tabla/TablaHeader";
 import TablaBody from "@/components/tabla/TablaBody";
 import Link from "next/link";
-import { getAll } from "@/app/actions/users";
+import { deshabilitar, getAll, habilitar } from "@/app/actions/users";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import Eliminar from "@/components/Eliminar";
 export default async function ListaUsuarios({
   params,
 }: {
@@ -42,34 +43,81 @@ export default async function ListaUsuarios({
         <td className="px-4  first:border-none last:border-none  border-r dark:border-[#111315] border-l w-28">
           <TooltipProvider delayDuration={0}>
             <div className="flex gap-2 items-end ">
-              <Tooltip>
-                <TooltipTrigger>
-                  <Link href={"usuarios/" + data.id + "/edit"}>
-                    <div className="rounded-full border text-emerald-700 p-1.5 hover:bg-emerald-600 hover:text-gray-50">
-                      <Lucide_Icon name="Pencil" size={15} />
-                    </div>
-                  </Link>
-                </TooltipTrigger>
-                <TooltipContent
-                  className="py-1 px-2 bg-black text-white"
-                  align="start"
-                >
-                  <span className="text-xs ">Editar</span>
-                </TooltipContent>
-              </Tooltip>
-              <Tooltip>
-                <TooltipTrigger>
-                  <div className="rounded-full border text-red-700  p-1.5 hover:bg-red-600 hover:text-gray-50">
-                    <Lucide_Icon name="Trash2" size={15} />
-                  </div>
-                </TooltipTrigger>
-                <TooltipContent
-                  className="py-1 px-2 bg-black text-white"
-                  align="start"
-                >
-                  <span className="text-xs ">Eliminar</span>
-                </TooltipContent>
-              </Tooltip>
+              {data.estado === 1 && (
+                <>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <Link href={"usuarios/" + data.id + "/edit"}>
+                        <div className="rounded-full border text-emerald-700 p-1.5 hover:bg-emerald-600 hover:text-gray-50">
+                          <Lucide_Icon name="Pencil" size={15} />
+                        </div>
+                      </Link>
+                    </TooltipTrigger>
+                    <TooltipContent
+                      className="py-1 px-2 bg-black text-white"
+                      align="start"
+                    >
+                      <span className="text-xs ">Editar</span>
+                    </TooltipContent>
+                  </Tooltip>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <Eliminar
+                        action={deshabilitar}
+                        titulo="Seguro que desea inhabilitar el usuario"
+                        btnText={
+                          <div className="rounded-full border text-red-700  p-1.5 hover:bg-red-600 hover:text-gray-50">
+                            <Lucide_Icon name="Trash2" size={15} />
+                          </div>
+                        }
+                      >
+                        <input
+                          type="number"
+                          hidden
+                          value={data.id}
+                          readOnly
+                          name="id"
+                        />
+                      </Eliminar>
+                    </TooltipTrigger>
+                    <TooltipContent
+                      className="py-1 px-2 bg-black text-white"
+                      align="start"
+                    >
+                      <span className="text-xs ">Deshabilitar</span>
+                    </TooltipContent>
+                  </Tooltip>
+                </>
+              )}
+              {data.estado === 2 && (
+                <Tooltip>
+                  <TooltipTrigger>
+                    <Eliminar
+                      action={habilitar}
+                      titulo="Seguro que desea inhabilitar el usuario"
+                      btnText={
+                        <div className="rounded-full border text-green-700  p-1.5 hover:bg-green-600 hover:text-gray-50">
+                          <Lucide_Icon name="RefreshCcw" size={15} />
+                        </div>
+                      }
+                    >
+                      <input
+                        type="number"
+                        hidden
+                        value={data.id}
+                        readOnly
+                        name="id"
+                      />
+                    </Eliminar>
+                  </TooltipTrigger>
+                  <TooltipContent
+                    className="py-1 px-2 bg-black text-white"
+                    align="start"
+                  >
+                    <span className="text-xs ">Habilitar</span>
+                  </TooltipContent>
+                </Tooltip>
+              )}
             </div>
           </TooltipProvider>
         </td>

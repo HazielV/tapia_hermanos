@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -109,7 +108,11 @@ export default function Paradas({
                   <span className="capitalize">agregar parada</span>
                 </Button>
               </DialogTrigger>
-              <DialogContent className="w-96 backdrop:bg-transparent">
+
+              <DialogContent
+                classNameOverlay="bg-black/30"
+                className="w-96 backdrop:bg-transparent "
+              >
                 <DialogHeader>
                   <DialogTitle>Nueva parada</DialogTitle>
 

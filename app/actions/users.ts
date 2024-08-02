@@ -10,6 +10,7 @@ export async function getAll() {
     const users = await prisma.user.findMany({
       select: {
         id: true,
+        estado: true,
         login: true,
         persona: {
           select: {
@@ -33,6 +34,7 @@ export async function create(formData: FormData) {
     data: {
       login: formData.get("usuario") as string,
       password: formData.get("password") as string,
+      estado: 1,
       persona: {
         create: {
           nombre: formData.get("nombre") as string,
@@ -91,6 +93,32 @@ export async function edit(userId: number, formData: FormData) {
           nroDocumento: Number(formData.get("nroDocumento")),
         },
       },
+    },
+  });
+  revalidatePath("/dashboard/usuarios");
+  redirect("/dashboard/usuarios");
+}
+export async function deshabilitar(formData: FormData) {
+  const prisma = new PrismaClient();
+  await prisma.user.update({
+    where: {
+      id: Number(formData.get("id")),
+    },
+    data: {
+      estado: 2,
+    },
+  });
+  revalidatePath("/dashboard/usuarios");
+  redirect("/dashboard/usuarios");
+}
+export async function habilitar(formData: FormData) {
+  const prisma = new PrismaClient();
+  await prisma.user.update({
+    where: {
+      id: Number(formData.get("id")),
+    },
+    data: {
+      estado: 1,
     },
   });
   revalidatePath("/dashboard/usuarios");
