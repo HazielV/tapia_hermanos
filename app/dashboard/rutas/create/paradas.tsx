@@ -109,10 +109,7 @@ export default function Paradas({
                 </Button>
               </DialogTrigger>
 
-              <DialogContent
-                classNameOverlay="bg-black/30"
-                className="w-96 backdrop:bg-transparent "
-              >
+              <DialogContent className="w-96 backdrop:bg-transparent ">
                 <DialogHeader>
                   <DialogTitle>Nueva parada</DialogTitle>
 
