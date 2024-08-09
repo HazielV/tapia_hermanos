@@ -1,63 +1,69 @@
-"use server";
-import bcrypt from "bcryptjs";
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
-import { SignJWT, jwtVerify } from "jose";
-import { PrismaClient } from "@prisma/client";
+'use server'
+import bcrypt from 'bcryptjs'
+import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
+import { SignJWT, jwtVerify } from 'jose'
+import { PrismaClient } from '@prisma/client'
 
-const clave = process.env.PRIVATE_KEY as string;
-const key = new TextEncoder().encode(clave);
+const clave = process.env.PRIVATE_KEY as string
+const key = new TextEncoder().encode(clave)
 
 export async function encrypt(payload: any) {
   return await new SignJWT(payload)
-    .setProtectedHeader({ alg: "HS256" })
+    .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
-    .setExpirationTime("1 day from now")
-    .sign(key);
+    .setExpirationTime('1 day from now')
+    .sign(key)
 }
 export async function decrypt(input: string) {
   const { payload } = await jwtVerify(input, key, {
-    algorithms: ["HS256"],
-  });
-  return payload;
+    algorithms: ['HS256'],
+  })
+  return payload
 }
 export async function getSession() {
-  const session = cookies().get("session")?.value;
+  const session = cookies().get('session')?.value
 
-  if (!session) return null;
-  return await decrypt(session);
+  if (!session) return null
+  return await decrypt(session)
 }
 export async function logout() {
-  cookies().set("session", "", { expires: new Date(0) });
-  redirect(`/login`);
+  cookies().set('session', '', { expires: new Date(0) })
+  redirect(`/login`)
 }
 export async function login(prevState: any, formData: FormData) {
-  const prisma = new PrismaClient();
+  const prisma = new PrismaClient()
 
-  const usuario = await prisma.user.findUnique({
-    where: {
-      login: formData.get("usuario") as string,
-    },
-  });
+  const usuario =
+    (await prisma.user.findUnique({
+      where: {
+        login: formData.get('usuario') as string,
+      },
+    })) || null
+  console.log(usuario)
   if (usuario) {
     const comparar = await bcrypt.compare(
-      formData.get("password") as string,
+      formData.get('password') as string,
       usuario?.password as string
-    );
-    console.log("comparar", comparar);
+    )
+    console.log('comparar', comparar)
     if (comparar) {
       const data = {
-        usuario: formData.get("usuario"),
-      };
-      const expires = new Date(Date.now() + 24 * 60 * 60 * 1000);
-      const session = await encrypt(data);
+        usuario: formData.get('usuario'),
+      }
+      const expires = new Date(Date.now() + 24 * 60 * 60 * 1000)
+      const session = await encrypt(data)
 
-      cookies().set("session", session, { expires, httpOnly: true, path: "/" });
-      redirect(`/dashboard`);
+      cookies().set('session', session, {
+        expires,
+        httpOnly: true,
+        path: '/',
+      })
+      redirect(`/dashboard`)
     } else {
-      return { message: "error credenciales" };
+      return { message: 'error credenciales' }
     }
   } else {
-    return { message: "error credenciales" };
+    return { message: 'error credenciales' }
   }
 }
