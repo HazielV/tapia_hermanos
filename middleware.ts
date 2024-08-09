@@ -12,7 +12,7 @@ export default async function middleware(request: NextRequest) {
 
   const session = await getSession();
 
-  console.log("ruta protegida", isProtectedRoute);
+  /*  console.log("ruta protegida", isProtectedRoute); */
   if (isProtectedRoute && !session) {
     return NextResponse.redirect(new URL("/login", request.nextUrl));
   }
