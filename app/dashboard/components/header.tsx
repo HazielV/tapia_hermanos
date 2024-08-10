@@ -12,7 +12,17 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export default function Header({ logout }: { logout: () => void }) {
+export default function Header({
+  logout,
+  usuario,
+}: {
+  logout: () => void;
+  usuario: {
+    nombre: string;
+    primerApellido: string;
+    segundoApellido: string;
+  } | null;
+}) {
   const { toggle } = useSidebarStore();
   return (
     <div className="w-full bg-white shadow-md px-5 py-3.5 flex justify-between z-50">
@@ -22,8 +32,11 @@ export default function Header({ logout }: { logout: () => void }) {
 
       <DropdownMenu dir="ltr">
         <DropdownMenuTrigger>
-          <div className="rounded-full grid place-content-center h-10 w-10 bg-indigo-500 hover:bg-indigo-600 text-white font-medium">
-            HE
+          <div className="rounded-full grid place-content-center h-10 w-10 bg-indigo-500 hover:bg-indigo-600 text-white font-medium uppercase">
+            {usuario?.nombre && usuario.nombre.at(0)}
+            {usuario?.primerApellido
+              ? usuario.primerApellido.at(0)
+              : usuario?.segundoApellido.at(0)}
           </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="mr-5 w-48">

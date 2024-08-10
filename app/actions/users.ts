@@ -2,7 +2,7 @@
 import { PrismaClient, user } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-
+import bcrypt from "bcryptjs";
 export async function getAll() {
   let data = [];
   const prisma = new PrismaClient();
@@ -30,10 +30,16 @@ export async function getAll() {
 }
 export async function create(formData: FormData) {
   const prisma = new PrismaClient();
+  const saltRounds = 10;
+  const hashedPassword = await bcrypt.hash(
+    formData.get("password") as string,
+    saltRounds
+  );
+
   const newUser = await prisma.user.create({
     data: {
       login: formData.get("usuario") as string,
-      password: formData.get("password") as string,
+      password: hashedPassword,
       estado: 1,
       persona: {
         create: {

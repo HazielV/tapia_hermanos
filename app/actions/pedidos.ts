@@ -55,7 +55,39 @@ export async function finalizarSeguimiento(
   redirect("/dashboard/pedidos");
 }
 /* getPedido */
+export async function rastrearPedido(codigo: string) {
+  let data = null;
+  const prisma = new PrismaClient();
+  try {
+    const result = await prisma.pedido.findUnique({
+      where: {
+        codigo: codigo,
+      },
 
+      include: {
+        seguimiento: {
+          include: {
+            parada: true,
+          },
+        },
+        ruta: {
+          include: {
+            parada: {
+              include: {
+                estacion: true,
+              },
+            },
+          },
+        },
+      },
+    });
+    data = result;
+  } finally {
+    prisma.$disconnect();
+  }
+
+  return data;
+}
 export async function getPedido(id: number) {
   let data = null;
   const prisma = new PrismaClient();

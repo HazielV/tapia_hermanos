@@ -39,8 +39,18 @@ export async function login(prevState: any, formData: FormData) {
       where: {
         login: formData.get("usuario") as string,
       },
+      select: {
+        password: true,
+        persona: {
+          select: {
+            nombre: true,
+            primerApellido: true,
+            segundoApellido: true,
+          },
+        },
+      },
     })) || null;
-  console.log(usuario);
+
   if (usuario) {
     const comparar = await bcrypt.compare(
       formData.get("password") as string,
@@ -49,7 +59,7 @@ export async function login(prevState: any, formData: FormData) {
     console.log("comparar", comparar);
     if (comparar) {
       const data = {
-        usuario: formData.get("usuario"),
+        usuario: usuario.persona,
       };
       const expires = new Date(Date.now() + 24 * 60 * 60 * 1000);
       const session = await encrypt(data);

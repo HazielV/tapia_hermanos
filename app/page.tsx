@@ -89,7 +89,7 @@ export default function Home({
       ),
     },
   ];
-  console.log(searchParams);
+
   return (
     <div className="">
       <div className="flex flex-col overflow-x-hidden  ">
