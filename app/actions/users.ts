@@ -1,27 +1,40 @@
 "use server";
-import { PrismaClient, user } from "@prisma/client";
+import { Prisma, PrismaClient, user } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import bcrypt from "bcryptjs";
-export async function getAll() {
-  let data = [];
+export async function getAll(pagina: number) {
+  const select = {
+    id: true,
+    estado: true,
+    login: true,
+    persona: {
+      select: {
+        nombre: true,
+        primerApellido: true,
+        segundoApellido: true,
+      },
+    },
+  } as const;
+
+  let data: {
+    usuarios: Prisma.userGetPayload<{ select: typeof select }>[];
+    total: number;
+  } = {
+    usuarios: [],
+    total: 0,
+  };
   const prisma = new PrismaClient();
   try {
-    const users = await prisma.user.findMany({
-      select: {
-        id: true,
-        estado: true,
-        login: true,
-        persona: {
-          select: {
-            nombre: true,
-            primerApellido: true,
-            segundoApellido: true,
-          },
-        },
-      },
+    const usuarios = await prisma.user.findMany({
+      take: 10,
+      skip: 10 * (pagina - 1),
+      select: select,
     });
-    data = users;
+    const total = await prisma.user.count();
+
+    data.usuarios = usuarios;
+    data.total = total;
   } finally {
     prisma.$disconnect();
   }

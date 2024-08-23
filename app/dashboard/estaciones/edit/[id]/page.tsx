@@ -1,4 +1,5 @@
 import { edit, getEstacion, tipoEstaciones } from "@/app/actions/estaciones";
+import FormButton from "@/components/FormButton";
 
 import Lucide_Icon from "@/components/lucide_icono";
 import { Button } from "@/components/ui/button";
@@ -88,14 +89,7 @@ export default async function Edit({ params }: { params: { id: string } }) {
           </div>
         </div>
       </div>
-      <div className="flex sticky bottom-0 bg-white justify-end w-full md:col-span-2  text-sm px-4 py-4">
-        <Button
-          variant={"default"}
-          className="bg-indigo-600 hover:bg-indigo-700"
-        >
-          Guardar
-        </Button>
-      </div>
+      <FormButton />
     </form>
   );
 }

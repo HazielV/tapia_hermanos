@@ -22,7 +22,6 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-
 import Eliminar from "@/components/Eliminar";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 export default async function ListaUsuarios({
@@ -30,8 +29,7 @@ export default async function ListaUsuarios({
 }: {
   params: { pagina: string };
 }) {
-  const perPage = 2;
-  const paginaActual = 1;
+  const paginaActual = Number(params.pagina);
   const { usuarios, total } = await getAll(paginaActual);
 
   function filas(data: typeof usuarios extends (infer T)[] ? T : never) {
@@ -136,7 +134,7 @@ export default async function ListaUsuarios({
     );
   }
   return (
-    <div className="p-8 pt-10 flex flex-col gap-5 overflow-hidden">
+    <div className="p-8 pt-10 flex flex-col gap-5 ">
       <div className="flex w-full justify-between items-center">
         <h1 className="text-4xl font-medium  ">Usuarios</h1>
         <Link href={"/dashboard/usuarios/create"}>

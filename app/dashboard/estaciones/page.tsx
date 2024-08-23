@@ -13,14 +13,13 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-export default async function ListaUsuarios({
+export default async function ListaEstaciones({
   params,
 }: {
   params: { pagina: string };
 }) {
-  const filasPagina = 8;
-  const page = 1;
-  const datos = await getAll();
+  const paginaActual = 1;
+  const { datos, total } = await getAll(paginaActual);
 
   function filas(data: typeof datos extends (infer T)[] ? T : never) {
     return (
@@ -40,7 +39,7 @@ export default async function ListaUsuarios({
             <div className="flex gap-2 items-end ">
               <Tooltip>
                 <TooltipTrigger>
-                  <Link href={"estaciones/" + data.id + "/edit"}>
+                  <Link href={"/dashboard/estaciones" + "/edit/" + data.id}>
                     <div className="rounded-full border text-emerald-700 p-1.5 hover:bg-emerald-600 hover:text-gray-50">
                       <Lucide_Icon name="Pencil" size={15} />
                     </div>
@@ -76,7 +75,7 @@ export default async function ListaUsuarios({
     <div className="p-8 pt-10 flex flex-col gap-5 ">
       <div className="flex w-full justify-between items-center">
         <h1 className="text-4xl font-medium  ">Estaciones</h1>
-        <Link href={"estaciones/create"}>
+        <Link href={"/dashboard/estaciones/create"}>
           <Button className="flex gap-2 text-xs pl-2.5 capitalize py-2 h-auto bg-indigo-600 hover:bg-indigo-700 text-white">
             <Lucide_Icon name="Plus" size={18} />
             <span>nueva estacion</span>
@@ -85,7 +84,12 @@ export default async function ListaUsuarios({
       </div>
 
       <div className="bg-white rounded-xl py-2 mt-5">
-        <Tabla>
+        <Tabla
+          paginaActual={paginaActual}
+          total={total}
+          paginacion={true}
+          ruta="estaciones/"
+        >
           <TablaHeader
             columns={[
               { id: 1, descripcion: "id" },

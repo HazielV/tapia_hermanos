@@ -1,14 +1,22 @@
 "use server";
-import { PrismaClient, user } from "@prisma/client";
+import { estacion, PrismaClient, user } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-export async function getAll() {
-  let data = [];
+export async function getAll(pagina: number) {
+  let data: {
+    datos: estacion[];
+    total: number;
+  } = {
+    datos: [],
+    total: 0,
+  };
   const prisma = new PrismaClient();
   try {
     const estaciones = await prisma.estacion.findMany({});
-    data = estaciones;
+    const total = await prisma.estacion.count();
+    data.datos = estaciones;
+    data.total = total;
   } finally {
     prisma.$disconnect();
   }

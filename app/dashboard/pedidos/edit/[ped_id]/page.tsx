@@ -14,6 +14,7 @@ import {
 import Link from "next/link";
 import React from "react";
 import Placas from "../../create/placas";
+import FormButton from "@/components/FormButton";
 
 export default async function page({ params }: { params: { ped_id: string } }) {
   const pedidoId = params.ped_id;
@@ -201,14 +202,7 @@ export default async function page({ params }: { params: { ped_id: string } }) {
           />
         </div>
       </div>
-      <div className="flex sticky bottom-0 bg-white justify-end w-full md:col-span-2  text-sm px-4 py-4 border-t">
-        <Button
-          variant={"default"}
-          className="bg-indigo-600 hover:bg-indigo-700"
-        >
-          Guardar
-        </Button>
-      </div>
+      <FormButton />
     </form>
   );
 }

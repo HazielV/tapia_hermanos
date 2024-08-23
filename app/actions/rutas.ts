@@ -1,26 +1,40 @@
 "use server";
-import { PrismaClient, user } from "@prisma/client";
+import { Prisma, PrismaClient, user } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-export async function getAll() {
-  let data = [];
-  const prisma = new PrismaClient();
-  try {
-    const rutas = await prisma.ruta.findMany({
-      include: {
-        parada: {
+export async function getAll(pagina: number) {
+  const include = {
+    parada: {
+      select: {
+        estacion: {
           select: {
-            estacion: {
-              select: {
-                nombre: true,
-              },
-            },
+            nombre: true,
           },
         },
       },
+    },
+  } as const;
+
+  let data: {
+    datos: Prisma.rutaGetPayload<{ include: typeof include }>[];
+    total: number;
+  } = {
+    datos: [],
+    total: 0,
+  };
+  /* let data = []; */
+  const prisma = new PrismaClient();
+  try {
+    const datos = await prisma.ruta.findMany({
+      take: 10,
+      skip: 10 * (pagina - 1),
+      include: include,
     });
-    data = rutas;
+    const total = await prisma.ruta.count();
+
+    data.datos = datos;
+    data.total = total;
   } finally {
     prisma.$disconnect();
   }

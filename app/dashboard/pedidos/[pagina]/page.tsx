@@ -16,10 +16,14 @@ import React from "react";
 
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import DialogSeg from "./orden/[ped_id]/DialogSeg";
+import DialogSeg from "../orden/[ped_id]/DialogSeg";
 
-export default async function Pedidos() {
-  const paginaActual = 1;
+export default async function Pedidos({
+  params,
+}: {
+  params: { pagina: string };
+}) {
+  const paginaActual = Number(params.pagina);
   const { datos, total } = await getAll(paginaActual);
 
   function filas(data: typeof datos extends (infer T)[] ? T : never) {

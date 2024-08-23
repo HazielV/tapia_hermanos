@@ -1,11 +1,22 @@
 "use server";
-import { PrismaClient, user } from "@prisma/client";
+import { Prisma, PrismaClient, user } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import Short from "short-uuid";
 
-export async function getAll() {
-  let data = [];
+export async function getAll(pagina: number) {
+  let include: {
+    ruta: true;
+    seguimiento: true;
+  };
+
+  let data: {
+    datos: Prisma.pedidoGetPayload<{ include: typeof include }>[];
+    total: number;
+  } = {
+    datos: [],
+    total: 0,
+  };
   const prisma = new PrismaClient();
   try {
     const pedidos = await prisma.pedido.findMany({
@@ -17,7 +28,9 @@ export async function getAll() {
         id: "asc",
       },
     });
-    data = pedidos;
+    const total = await prisma.pedido.count();
+    data.datos = pedidos;
+    data.total = total;
   } finally {
     prisma.$disconnect();
   }

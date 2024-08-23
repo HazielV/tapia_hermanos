@@ -13,8 +13,12 @@ import {
 import Link from "next/link";
 import React from "react";
 
-export default async function Rutas() {
-  const paginaActual = 1;
+export default async function Rutas({
+  params,
+}: {
+  params: { pagina: string };
+}) {
+  const paginaActual = Number(params.pagina);
   const { datos, total } = await getAll(paginaActual);
   function filas(data: typeof datos extends (infer T)[] ? T : never) {
     return (

@@ -19,9 +19,9 @@ export default async function RootLayout({
   const usuario = session.usuario;
 
   return (
-    <div className="flex w-screen h-screen">
+    <div className="flex w-screen h-screen overflow-hidden">
       <Sidebar />
-      <main className="flex-1 bg-[#F4F4F4] h-full flex flex-col">
+      <main className="flex-1 bg-[#F4F4F4] h-full flex flex-col overflow-hidden">
         <Header logout={logout} usuario={usuario} />
         {children}
       </main>

@@ -13,6 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { tipoEstaciones } from "@/app/actions/estaciones";
+import FormButton from "@/components/FormButton";
 
 export default async function Create() {
   const datos = await tipoEstaciones();
@@ -80,14 +81,7 @@ export default async function Create() {
           </div>
         </div>
       </div>
-      <div className="flex sticky bottom-0 bg-white justify-end w-full md:col-span-2  text-sm px-4 py-4">
-        <Button
-          variant={"default"}
-          className="bg-indigo-600 hover:bg-indigo-700"
-        >
-          Crear Estacion
-        </Button>
-      </div>
+      <FormButton />
     </form>
   );
 }
