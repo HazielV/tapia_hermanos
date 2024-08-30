@@ -14,7 +14,7 @@ export default function Login() {
   console.log(state);
   return (
     <div className="flex flex-col items-center justify-center w-screen h-screen">
-      <form action={formAction} className="grid gap-5 w-full max-w-sm">
+      <form action={formAction} className="grid gap-5 w-full max-w-sm p-8">
         <h1 className="text-2xl font-medium pb-5">Bienvenido al sistema</h1>
         <p aria-live="polite" className="">
           {state?.message}

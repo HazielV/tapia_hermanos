@@ -73,8 +73,8 @@ export default async function Rutas({
     );
   }
   return (
-    <div className="p-8 pt-10 flex flex-col gap-5 ">
-      <div className="flex w-full justify-between items-center">
+    <div className="p-4 md:p-8 pt-10 flex flex-col gap-5 flex-1 overflow-y-auto">
+      <div className="flex w-full justify-between items-center flex-wrap gap-3">
         <h1 className="text-4xl font-medium  ">Rutas</h1>
         <Link href={"/dashboard/rutas/create"}>
           <Button className="flex gap-2 text-xs pl-2.5 capitalize py-2 h-auto bg-indigo-600 hover:bg-indigo-700 text-white">

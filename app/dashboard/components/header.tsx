@@ -25,7 +25,7 @@ export default function Header({
 }) {
   const { toggle } = useSidebarStore();
   return (
-    <div className="w-full bg-white shadow-md px-5 py-3.5 flex justify-between z-50">
+    <div className="w-full bg-white shadow-md px-5 py-3.5 flex justify-between z-40">
       <button onClick={toggle} className="outline-none">
         <Menu />
       </button>

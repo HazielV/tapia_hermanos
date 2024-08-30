@@ -136,8 +136,8 @@ export default async function ListaUsuarios({
     );
   }
   return (
-    <div className="p-8 pt-10 flex flex-col gap-5 overflow-hidden">
-      <div className="flex w-full justify-between items-center">
+    <div className="p-4 md:p-8 pt-10 flex-1 flex flex-col gap-5 overflow-y-auto">
+      <div className="flex w-full justify-between items-center flex-wrap gap-3">
         <h1 className="text-4xl font-medium  ">Usuarios</h1>
         <Link href={"/dashboard/usuarios/create"}>
           <Button className="flex gap-2 text-xs pl-2.5 capitalize py-2 h-auto bg-indigo-600 hover:bg-indigo-700 text-white">

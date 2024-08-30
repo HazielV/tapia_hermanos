@@ -59,7 +59,7 @@ export default function Sidebar() {
   return (
     <div
       id="elemento"
-      className="z-30  px-3 fixed transition-all duration-300 bg-white w-60 h-full shadow-lg data-[sidebar=true]:-translate-x-full md:data-[sidebar=true]:translate-x-0 md:data-[sidebar=true]:w-[64px] md:relative md:data-[sidebar=false]:w-60 flex flex-col gap-3 py-20 "
+      className="z-50  px-3 fixed transition-all duration-300 bg-white w-60 h-full shadow-lg data-[sidebar=true]:-translate-x-full md:data-[sidebar=true]:translate-x-0 md:data-[sidebar=true]:w-[64px] md:relative md:data-[sidebar=false]:w-60 flex flex-col gap-3 py-20 "
       data-sidebar={isOpen}
     >
       <button

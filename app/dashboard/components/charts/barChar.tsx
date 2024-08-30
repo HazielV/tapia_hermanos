@@ -41,7 +41,7 @@ const chartConfig = {
 
 export function DashboardBarChart({ data }: { data: any[] }) {
   return (
-    <Card className="col-span-2">
+    <Card className=" min-w-[26rem] h-full">
       <CardHeader>
         <CardTitle>Pedidos por mes</CardTitle>
         <CardDescription>Enero - Diciembre</CardDescription>

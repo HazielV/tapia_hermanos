@@ -20,7 +20,7 @@ export default async function Create() {
   return (
     <form
       action={create}
-      className="w-fullh-[calc(100vh-68px)] flex-1  flex flex-col relative"
+      className="flex-1 flex flex-col relative overflow-y-auto"
     >
       <div className="flex-1 p-8 pt-10 flex flex-col gap-5">
         <div className="mb-5 flex justify-between">
