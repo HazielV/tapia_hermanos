@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import Sidebar from "./sidebar";
 
 export default function Home({
   searchParams,
@@ -92,7 +93,7 @@ export default function Home({
 
   return (
     <div className="">
-      <div className="flex flex-col overflow-x-hidden  ">
+      <div className="flex flex-col overflow-x-hidden overflow-y-auto min-h-screen  ">
         <div className="fixed bottom-8 left-8 items-center flex flex-col gap-5 z-50 group">
           <a
             href="https://www.facebook.com/profile.php?id=61557797254300"
@@ -130,23 +131,8 @@ export default function Home({
           <div className="h-16 flex">
             <img src="/logo.png" alt="" />
           </div>
-          {/* barras */}
-          <div className="cursor-pointer sm:hidden">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M3.75 6.75h16.5M3.75 12h16.5M12 17.25h8.25"
-              />
-            </svg>
-          </div>
+          {/* button barras */}
+          <Sidebar />
           {/* MENUS */}
           <div className="hidden sm:block">
             <div className="grid grid-cols-6 gap-8 font-medium">
@@ -190,11 +176,21 @@ export default function Home({
                     nacional e internacional
                   </span>
                 </div>
-                <a href="#Contacto">
-                  <button className="text-white  self-end text-lg border-[3px] px-5 py-2.5 hover:bg-white hover:text-black transition hover:border-white">
-                    Contáctanos
-                  </button>
-                </a>
+                <div className="flex gap-2 ">
+                  <Link href={"/rastrearpedido"} className="flex">
+                    <Button
+                      className="h-auto px-7 text-lg"
+                      variant={"secondary"}
+                    >
+                      Ratrear Pedido
+                    </Button>
+                  </Link>
+                  <a href="#Contacto">
+                    <button className="text-white   self-end text-lg border-[3px] px-5 py-2.5 hover:bg-white hover:text-black transition hover:border-white">
+                      Contáctanos
+                    </button>
+                  </a>
+                </div>
               </div>
             </div>
             <BarraFlotante />

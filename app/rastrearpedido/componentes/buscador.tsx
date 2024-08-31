@@ -10,11 +10,12 @@ export default function Buscador() {
   const [codigo, setCodigo] = useState("");
   return (
     <div className="grid w-full items-center gap-1.5 max-w-sm">
-      <Label htmlFor="nroDocumento">Codigo de pedido</Label>
+      <h1 className="text-3xl mb-8 text-center">Seguimiendo de carga</h1>
+      <Label htmlFor="codigo">Codigo de pedido</Label>
       <Input
-        id="nroDocumento"
-        name="nroDocumento"
-        placeholder="Nro documento"
+        id="codigo"
+        name="codigo"
+        placeholder="Escriba el codigo de rastreo"
         required
         value={codigo}
         onChange={(event: React.ChangeEvent<HTMLInputElement>) =>

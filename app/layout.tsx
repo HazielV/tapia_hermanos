@@ -19,8 +19,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="overflow-hidden">
-      <body suppressHydrationWarning className={poppins.className}>
+    <html lang="en" className="">
+      <body
+        suppressHydrationWarning
+        className={"overflow-y-auto min-h-screen" + poppins.className}
+      >
         {children}
       </body>
     </html>

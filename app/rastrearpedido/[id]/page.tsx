@@ -1,5 +1,6 @@
 import { rastrearPedido } from "@/app/actions/pedidos";
 import Lucide_Icon from "@/components/lucide_icono";
+import Link from "next/link";
 import React from "react";
 
 export default async function page({ params }: { params: { id: string } }) {
@@ -12,58 +13,42 @@ export default async function page({ params }: { params: { id: string } }) {
         <div className="h-16 flex">
           <img src="/logo.png" alt="" />
         </div>
-        {/* barras */}
-        <div className="cursor-pointer sm:hidden">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M3.75 6.75h16.5M3.75 12h16.5M12 17.25h8.25"
-            />
-          </svg>
-        </div>
+
         {/* MENUS */}
-        <div className="hidden sm:block">
-          <div className="grid grid-cols-6 gap-8 font-medium">
-            <div className="cursor-pointer ">
-              <a href="#Inicio">Inicio</a>
-            </div>
-            <div className="cursor-pointer">
-              <a href="#Nosotros">Nosotros</a>
-            </div>
-            <div className="cursor-pointer">
-              <a href="#Servicios">Servicios</a>
-            </div>
-            <div className="cursor-pointer">
-              <a href="#Cotizacion">Cotizacion</a>
-            </div>
-            <div className="cursor-pointer">
-              <a href="#Destinos">Destinos</a>
-            </div>
-            <div className="cursor-pointer">
-              <a href="#Contacto">Contacto</a>
-            </div>
+        <div className="">
+          <div className="grid  gap-8 font-medium">
+            <Link href={"/"} className="flex">
+              <div className="cursor-pointer ">Inicio</div>
+            </Link>
           </div>
         </div>
       </div>
       {/* buscador */}
       {pedido ? (
-        <div className="rounded-md  w-full md:max-w-lg shadow-md m-5 flex flex-col">
-          <div className="border-b p-10 first-letter:uppercase font-medium text-sm">
-            fecha de entrega estimada:{" "}
-            {new Date(pedido.fecha_entrega).toLocaleDateString("es-ES", {
-              weekday: "short", // Día de la semana en texto
-              day: "numeric", // Día del mes en número
-              month: "short", // Mes en texto
-              year: "numeric", // Año en número
-            })}
+        <div className="rounded-md  w-full md:max-w-2xl shadow-md m-5 flex flex-col ">
+          <div>Codigo: {pedidoCodigo}</div>
+          <div className="border-b p-10 first-letter:uppercase font-medium text-sm flex items-center gap-10">
+            <span className="text-emerald-600">
+              <Lucide_Icon name="CircleCheck" size={40} />
+            </span>
+            <h1 className="text-lg">
+              !Excelente!, el pago fue confirmado, estamos trabajando en el
+              envio
+            </h1>
+          </div>
+          <div className="border-b p-10 first-letter:uppercase font-medium text-lg flex items-center gap-10">
+            <span className="text-indigo-600">
+              <Lucide_Icon name="Calendar" size={40} />
+            </span>
+            <p>
+              fecha de entrega estimada:{" "}
+              {new Date(pedido.fecha_entrega).toLocaleDateString("es-ES", {
+                weekday: "short", // Día de la semana en texto
+                day: "numeric", // Día del mes en número
+                month: "short", // Mes en texto
+                year: "numeric", // Año en número
+              })}
+            </p>
           </div>
           <div className="p-10">
             <div className="px-10 border-l-2 border-gray-500  w-full max-w-md grid gap-5 relative">
